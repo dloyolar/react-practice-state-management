@@ -1,4 +1,5 @@
 import React from 'react';
+import { Loading } from './Loading';
 
 class ClassState extends React.Component {
   constructor(props) {
@@ -10,19 +11,22 @@ class ClassState extends React.Component {
     };
   }
 
+  // UNSAFE_componentWillMount() {
+  //   console.log('componentWillMount');
+  // }
 
-  componentWillMount() {
-    console.log('componentWillMount');
-  }
-
-  componentWillUnmount() { 
-    console.log('componentWillUnmount');
-  }
-  
   componentDidMount() {
     console.log('componentDidMount');
   }
 
+  componentDidUpdate() {
+    console.log('componentDidUpdate');
+    if (this.state.loading) {
+      setTimeout(() => {
+        this.setState({ loading: false });
+      }, 3000);
+    }
+  }
 
   render() {
     return (
@@ -33,13 +37,11 @@ class ClassState extends React.Component {
 
         {this.state.error && <p>Error: the code is not correct❗</p>}
 
-        {this.state.loading && <p>Loading...</p>}
+        {this.state.loading && <Loading />}
 
         <input type="text" placeholder="Security Code" />
 
-        <button onClick={() => this.setState({loading: true})}>
-          Check
-        </button>
+        <button onClick={() => this.setState({ loading: true })}>Check</button>
       </div>
     );
   }
